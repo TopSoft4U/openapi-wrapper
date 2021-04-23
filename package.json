@@ -1,0 +1,45 @@
+{
+  "name": "@topsoft4u/openapi-wrapper",
+  "description": "Wrapper for easier usage of client files generated with openapi-generator-cli",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/TopSoft4U/openapi-wrapper",
+  "homepage": "https://github.com/TopSoft4U/openapi-wrapper",
+  "bugs": {
+    "url": "https://github.com/TopSoft4U/openapi-wrapper/issues"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "keywords": [
+    "TopSoft4U",
+    "OpenAPI"
+  ],
+  "author": {
+    "name": "Łukasz Kolasa",
+    "email": "lukasz.kolasa@topsoft4u.com",
+    "url": "https://topsoft4u.com/"
+  },
+  "contributors": [
+    {
+      "name": "Łukasz Kolasa",
+      "email": "lukasz.kolasa@topsoft4u.com",
+      "url": "https://topsoft4u.com/"
+    }
+  ],
+  "scripts": {
+    "eslint": "eslint --ext js,jsx,ts,tsx src --fix"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4",
+    "eslint": "^7.24.0",
+    "@topsoft4u/eslint-config": "git://github.com/TopSoft4U/eslint-config.git"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@topsoft4u"
+    ]
+  }
+}

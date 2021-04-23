@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "dist",
+    "target": "es5",
+    "declaration": true,
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
