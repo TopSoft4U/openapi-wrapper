@@ -1,7 +1,7 @@
 {
   "name": "@topsoft4u/openapi-wrapper",
   "description": "Wrapper for easier usage of client files generated with openapi-generator-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/TopSoft4U/openapi-wrapper",
@@ -10,9 +10,6 @@
     "url": "https://github.com/TopSoft4U/openapi-wrapper/issues"
   },
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "keywords": [
     "TopSoft4U",
     "OpenAPI"
