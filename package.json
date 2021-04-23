@@ -27,9 +27,12 @@
     }
   ],
   "scripts": {
-    "eslint": "eslint --ext js,jsx,ts,tsx src --fix"
+    "eslint": "eslint --ext js,jsx,ts,tsx src --fix",
+    "deps:check": "npm-check-updates --dep prod,dev,optional",
+    "deps:update": "npm-check-updates --dep prod,dev,optional -u"
   },
   "devDependencies": {
+    "npm-check-updates": "^11.5.1",
     "@topsoft4u/eslint-config": "git://github.com/TopSoft4U/eslint-config.git",
     "eslint": "^7.24.0",
     "typescript": "^4.2.4"

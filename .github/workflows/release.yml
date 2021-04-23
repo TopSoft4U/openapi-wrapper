@@ -47,4 +47,3 @@ jobs:
 
       - name: Push changes
         run: git push --all origin -u && git push --tags origin
-
