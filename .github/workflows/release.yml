@@ -47,7 +47,7 @@ jobs:
       - name: Publish to NPM
         run: npm publish --access=public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push changes
         run: git push --all origin -u && git push --tags origin
