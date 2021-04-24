@@ -1,7 +1,7 @@
 {
   "name": "@topsoft4u/openapi-wrapper",
   "description": "Wrapper for easier usage of client files generated with openapi-generator-cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/TopSoft4U/openapi-wrapper",
