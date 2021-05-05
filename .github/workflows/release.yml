@@ -35,7 +35,7 @@ jobs:
         run: yarn install
 
       - name: Compile
-        run: tsc
+        run: yarn build
 
       - name: Update version
         run: yarn version --patch

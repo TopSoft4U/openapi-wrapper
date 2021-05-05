@@ -2,8 +2,12 @@
   "name": "@topsoft4u/openapi-wrapper",
   "description": "Wrapper for easier usage of client files generated with openapi-generator-cli",
   "version": "1.0.8",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "repository": "https://github.com/TopSoft4U/openapi-wrapper",
   "homepage": "https://github.com/TopSoft4U/openapi-wrapper",
   "bugs": {
@@ -13,10 +17,6 @@
   "keywords": [
     "TopSoft4U",
     "OpenAPI"
-  ],
-  "files": [
-    "dist",
-    "src"
   ],
   "author": {
     "name": "Łukasz Kolasa",
@@ -31,15 +31,22 @@
     }
   ],
   "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "yarn generate_indexes && yarn eslint && yarn typecheck",
+    "generate_indexes": "barrelsby --delete --directory ./src",
     "eslint": "eslint --ext js,jsx,ts,tsx src --fix",
-    "deps:check": "npm-check-updates --dep prod,dev,optional",
-    "deps:update": "npm-check-updates --dep prod,dev,optional -u"
+    "typecheck": "tsc -p ./ --noEmit",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
+    "clean": "rimraf --no-glob ./dist",
+    "deps:check": "npx npm-check-updates --dep prod,dev,optional",
+    "deps:update": "npx npm-check-updates --dep prod,dev,optional -u"
   },
   "devDependencies": {
     "@topsoft4u/eslint-config": "git://github.com/TopSoft4U/eslint-config.git",
     "eslint": "^7.25.0",
     "npm-check-updates": "^11.5.1",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "husky": "^6.0.0"
   },
   "eslintConfig": {
     "extends": [

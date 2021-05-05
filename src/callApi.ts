@@ -1,51 +1,68 @@
-type CallAPIOptions<R> = {
-  params: R,
+type CallAPIOptions<FuncArgs> = {
+  params: FuncArgs,
   setInProgress?: (state: boolean) => void;
   // onError400?: (errors: ModelFieldError[] | null | undefined) => void;
-  onException?: (title: string, message: string) => void;
-  onResponseFail?: (code: number) => void;
+  onException?: (exception: any) => void;
+  onResponseFail?: (error: any, code: number) => void;
 };
 
+type CallAPIRawFunction<T> = {
+  raw: Response;
+  value(): Promise<T>;
+};
+
+type CallAPIReturn<T> = {
+  result?: T;
+  error?: any;
+
+  isSuccess: boolean;
+  statusCode: number;
+}
+
 // C - extends BaseAPI
-export const callAPI = async <C, R, T>(
-  client: C,
-  func: (params: R) => Promise<T>,
-  options: CallAPIOptions<R>
-): Promise<T | undefined> => {
+export const callAPI = async <TClient, TFuncArgs, TResult>(
+  client: TClient,
+  func: (params: TFuncArgs) => Promise<CallAPIRawFunction<TResult>>,
+  options?: CallAPIOptions<TFuncArgs>
+): Promise<CallAPIReturn<TResult>> => {
   const {
     params, setInProgress, onException, onResponseFail,
-  } = options;
+  } = options || {};
 
-  let result: T | undefined = undefined;
+  let statusCode = 999;
+  let error: any;
+  let result: TResult | undefined;
+
   try {
     setInProgress?.(true);
 
-    result = await func.apply(client, [params]);
-  } catch (ex) {
-    const title: string | null | undefined = "";
-    let message: string | null | undefined = "";
+    const response = await func.apply(client, [params]) as CallAPIRawFunction<TResult>;
 
+    statusCode = response.raw.status;
+    result = await response.value();
+  } catch (ex) {
     if (ex instanceof Response) {
       const {status, headers} = ex;
       const contentType = headers.get("content-type");
 
-      let output: any;
+      statusCode = status;
+
       if (contentType && contentType.indexOf("application/json") !== -1)
-        output = await ex.json();
+        error = await ex.json();
       else if (!contentType || contentType.indexOf("text/html") === -1)
-        message = await ex.text();
+        error = await ex.text();
 
-      if (typeof output === "object")
-        message = output.message;
+      onResponseFail?.(error, statusCode);
+    } else {
+      error = ex;
+      onException?.(ex);
+    }
 
-      onResponseFail?.(status);
-    } else
-      message = ex.message;
-
-    onException?.(title, message);
   } finally {
     setInProgress?.(false);
   }
 
-  return result;
+  const isSuccess = !error && statusCode >= 200 && statusCode < 300;
+
+  return {result, error, isSuccess, statusCode};
 };
