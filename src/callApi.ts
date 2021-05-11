@@ -1,4 +1,4 @@
-type CallAPIOptions<FuncArgs> = {
+export type CallAPIOptions<FuncArgs> = {
   params: FuncArgs,
   setInProgress?: (state: boolean) => void;
   // onError400?: (errors: ModelFieldError[] | null | undefined) => void;
@@ -6,23 +6,26 @@ type CallAPIOptions<FuncArgs> = {
   onResponseFail?: (error: any, code: number) => void;
 };
 
-type CallAPIRawFunction<T> = {
+export type CallAPIRawFunction<T> = {
   raw: Response;
   value(): Promise<T>;
 };
 
-type CallAPIReturn<T> = {
+export type CallAPIReturn<T> = {
   result?: T;
   error?: any;
 
   isSuccess: boolean;
   statusCode: number;
 }
+export type CallAPIReturnType<TResult> = Promise<CallAPIReturn<TResult>>;
+
+export type CallAPIFuncType<TFuncArgs, TResult> = (params: TFuncArgs) => Promise<CallAPIRawFunction<TResult>>;
 
 // C - extends BaseAPI
 export const callAPI = async <TClient, TFuncArgs, TResult>(
   client: TClient,
-  func: (params: TFuncArgs) => Promise<CallAPIRawFunction<TResult>>,
+  func: CallAPIFuncType<TFuncArgs, TResult>,
   options?: CallAPIOptions<TFuncArgs>
 ): Promise<CallAPIReturn<TResult>> => {
   const {
@@ -51,13 +54,12 @@ export const callAPI = async <TClient, TFuncArgs, TResult>(
         error = await ex.json();
       else if (!contentType || contentType.indexOf("text/html") === -1)
         error = await ex.text();
-
-      onResponseFail?.(error, statusCode);
     } else {
       error = ex;
       onException?.(ex);
     }
 
+    onResponseFail?.(error, statusCode);
   } finally {
     setInProgress?.(false);
   }

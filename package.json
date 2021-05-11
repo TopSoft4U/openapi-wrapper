@@ -37,6 +37,7 @@
     "eslint": "eslint --ext js,jsx,ts,tsx src --fix",
     "typecheck": "tsc -p ./ --noEmit",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
+    "watch": "tsc -w",
     "clean": "rimraf --no-glob ./dist",
     "deps:check": "npx npm-check-updates --dep prod,dev,optional",
     "deps:update": "npx npm-check-updates --dep prod,dev,optional -u"
@@ -45,7 +46,7 @@
     "@topsoft4u/eslint-config": "git://github.com/TopSoft4U/eslint-config.git",
     "eslint": "^7.25.0",
     "husky": "^6.0.0",
-    "npm-check-updates": "^11.5.1",
+    "npm-check-updates": "^11.5.10",
     "typescript": "^4.2.4"
   },
   "eslintConfig": {
