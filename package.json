@@ -1,7 +1,7 @@
 {
   "name": "@topsoft4u/openapi-wrapper",
   "description": "Wrapper for easier usage of client files generated with openapi-generator-cli",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "files": [
